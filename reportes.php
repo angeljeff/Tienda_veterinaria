@@ -97,7 +97,37 @@ switch($click){
         $_idf= $_POST['factura'];
         $actualizar= $conexion->prepare("UPDATE factura SET  id_estado_factura=:estado WHERE id_factura=$_idf ");
         $actualizar->bindParam(':estado',$estado);
-        $actualizar->execute(); ?>
+        $actualizar->execute();
+        $sqlx = "SELECT p.id_producto, p.id_pro_fac, p.cantidad, p.precio_p, p.total_pro, s.nombre_producto, s.imagen_po FROM prod_por_factura as p INNER JOIN productos as s ON p.id_producto= s.id_producto INNER JOIN factura as f ON p.id_factura= f.id_factura  where p.id_factura=$_idf";
+        $consultarproducto = $conexion->prepare($sqlx);
+        $consultarproducto->execute();
+        $countv= $consultarproducto->rowCount();
+        if($countv >0) {
+            $product=$consultarproducto->fetchAll(); 
+            $limite= sizeof($product);
+            foreach($product as $usu): 
+                $tabla[]= [$usu['id_producto'],$usu['cantidad']];
+            endforeach;
+            for ($i=0; $i<$limite; $i++){
+                $id_pro=$tabla[$i][0];
+                $canti=$tabla[$i][1];
+                $consultarp= $conexion->prepare("SELECT *FROM productos WHERE  id_producto= :id "); 
+                $consultarp->bindParam(':id',$id_pro);                   
+                $consultarp->execute();
+                $_count = $consultarp->rowCount();
+                if($_count > 0 ){
+                    $_datusuario= $consultarp->fetch();
+                    $nuevo_stock=$_datusuario['cantidad_disp'] - $canti;
+                    $ventas=$_datusuario['unidades_vendidas'] + $canti;
+                    $datopro= $conexion->prepare("UPDATE productos SET cantidad_disp=:c, unidades_vendidas=:u WHERE id_producto= :id");
+                    $datopro->bindParam(':id',$id_pro);
+                    $datopro->bindParam(':c',$nuevo_stock);
+                    $datopro->bindParam(':u',$ventas);
+                    $datopro->execute();
+                }
+            }
+        }
+        ?>
         <script>
         window.location.href = "<?php echo $url="http://".$_SERVER['HTTP_HOST']."/TIENDA_VETERINARIA";?>/correo_pedido.php?id=<?php echo $_idf?>";
         Swal.fire({

@@ -154,7 +154,7 @@ switch($veri){
 
     }
 
-        ?>
+ ?>
 
 
 
@@ -327,6 +327,7 @@ switch($veri){
                 <th scope="col">Cantidad</th>
                 <th scope="col">Fecha elaboración</th>
                 <th scope="col">Fecha vencimiento</th>
+                <th scope="col">días a vencer</th>
                 <th scope="col">Subcategoria</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Proveedor</th>
@@ -343,7 +344,20 @@ switch($veri){
                 if($countv >0) {
                     $product=$consultarproducto->fetchAll();
                 }      
-                foreach($product as $usu):  ?>
+                foreach($product as $usu):
+                    if($usu['fecha_vencimiento']!="0000-00-00"){
+                        $dtz = new DateTimeZone("America/Guayaquil");
+                        $fecha= new Datetime("now", $dtz);
+                        $fechaa=$fecha->format("Y-m-d");
+                        $fecha_vencimiento=$usu['fecha_vencimiento'];
+                        $vencimiento=new Datetime($fecha_vencimiento,$dtz);
+                        $diff = $vencimiento->diff($fecha); 
+                        $dias=$diff->days;
+                    }else{
+                        $dias=0;
+                    }
+ ?>
+                    
                     <tr>
                     <td ><img src="imagenes/productos/<?php echo $usu['imagen_po']?>" style="width:12rem; height:auto" alt=""> </td>
                     <td style="vertical-align:middle"><?php echo$usu['nombre_producto']?></td>
@@ -351,6 +365,19 @@ switch($veri){
                     <td style="vertical-align:middle"><?php echo $usu['cantidad_disp']?></td>
                     <td style="vertical-align:middle"><?php echo $usu['fecha_elaboracion']?></td>
                     <td style="vertical-align:middle"><?php echo $usu['fecha_vencimiento']?></td>
+                    <?php
+                    $dtz = new DateTimeZone("America/Guayaquil");
+                    $fecha_vencimiento=$usu['fecha_vencimiento'];
+                    $vencimiento=new Datetime($fecha_vencimiento,$dtz);
+                    $fecha_actual= strtotime(date("Y-m-d H:i:00",time()));
+                    $fec=$vencimiento->format('Y-m-d H:i:s');
+                    $fecha_vence= strtotime($fec);
+                    if($fecha_actual > $fecha_vence)
+	                    { ?>
+                    <td style="vertical-align:middle"><?php echo "-".$dias." "."días" ?></td>
+                    <?php }else{ ?>
+                    <td style="vertical-align:middle"><?php echo $dias." "."días" ?></td>
+                    <?php } ?>
                     <td style="vertical-align:middle"><?php echo $usu['nombre_sub_ca']?></td>
                     <td style="vertical-align:middle"><?php echo $usu['nombre_cat']?></td>
                     <td style="vertical-align:middle"><?php echo $usu['nombre_pro']?></td>

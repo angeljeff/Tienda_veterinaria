@@ -182,7 +182,7 @@ if($datoscarrito==True){
         <div class="container border border-secundary border-5" style="background:#7092BE;">
         <div class="row">
             <div class="col-md-12">
-            <div class="wrapper" style="width:97.6%">
+            <div class="wrapper" style="width:97.6%; margin-top:0.5rem">
                 <div class="title">RECOMENDADOR DE ALIMENTOS PARA LAS MASCOTAS - PET PLANET</div>
             </div>
 
@@ -195,7 +195,7 @@ if($datoscarrito==True){
             </div>
             <div class="col-md-8">
             
-                <div class="wrapper" style="width:100%">
+                <div class="wrapper" style="width:100%; margin-top:0.5rem">
                <div class="eltitle" style="text-align: left;">  &nbsp; &nbsp; PET PLANET</div>
                     <div class="form">
                         <div class="bot-inbox inbox">

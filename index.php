@@ -68,7 +68,7 @@ if($countt >0) {
                   $c=$h-$b;
                  
                  ?>
-                  <a class="nav-link dropdown-toggle h3 ms-3" href="#" id="offcanvasNavbarDropdown"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle h4 ms-3" href="#" id="offcanvasNavbarDropdown"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <?php echo$cat['nombre_cat']?><?php echo str_repeat(" -", $c)?>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
@@ -98,7 +98,7 @@ if($countt >0) {
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner mx-auto">
                 <div class="carousel-item active" data-bs-interval="1000">
-                  <img src="https://www.webooh.com/wp-content/uploads/2016/06/C%C3%B3mo-usar-Facebook-Messenger-en-tu-negocio-2.jpg" class="d-block w-100" alt="...">
+                  <img src="imagenes/publicidad_chatbot.jpeg" class="d-block w-100" alt="...">
                 </div>
                 <?php include("config/bd.php");
                 $sql = "SELECT *FROM publicidad where estado=1";
@@ -128,19 +128,22 @@ if($countt >0) {
           </div>
           <div class="col-md-3"></div>
         </div>
+        <br><br>
       </div>
       <div class="container" id="datos_buscador">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <?php include("config/bd.php"); 
-          $sql = "SELECT p.id_producto, p.nombre_producto, p.precio_pro, p.cantidad_disp, p.fecha_elaboracion, p.fecha_vencimiento, p.imagen_po, p.id_proveedores, p.id_sub_cat, s.nombre_sub_ca, c.nombre_cat, pro.nombre_pro FROM productos as p INNER JOIN sub_categorias as s ON p.id_sub_cat= s.id_sub_cat INNER JOIN categorias as c ON s.id_categoria=c.id_categoria INNER JOIN proveedores as pro ON p.id_proveedores=pro.id_proveedores where p.estado_producto=1";
+          $sql = "SELECT p.id_producto, p.nombre_producto, p.precio_pro, p.cantidad_disp, p.fecha_elaboracion, p.fecha_vencimiento, p.imagen_po, p.id_proveedores, p.id_sub_cat, s.nombre_sub_ca, c.nombre_cat, pro.nombre_pro FROM productos as p INNER JOIN sub_categorias as s ON p.id_sub_cat= s.id_sub_cat INNER JOIN categorias as c ON s.id_categoria=c.id_categoria INNER JOIN proveedores as pro ON p.id_proveedores=pro.id_proveedores where p.estado_producto=1 order by p.id_producto desc";
           $consultarproductos = $conexion->prepare($sql);
           $consultarproductos->execute();
           $county= $consultarproductos->rowCount();
           if($county >0) {
               $productt=$consultarproductos->fetchAll();
-          }      
-          foreach($productt as $pro):  ?>
+          }
+          $contador=0;      
+          foreach($productt as $pro):
+          if($contador<12){?>
 
           <div class="col">
             <div class="card shadow-sm img-prod" style="border-radius:1em" >
@@ -203,7 +206,7 @@ if($countt >0) {
                 <div class="container">
                   <div class="row">
                   <form action="carrito.php" method="POST" class="d-flex justify-content-between">
-                    <div class="col-md-5">
+                    <div class="col-md-6 col-sm-12 col-7">
                       
                        <div class="d-flex justify-content-between">
                           <div>
@@ -214,24 +217,24 @@ if($countt >0) {
                             <input type="text" name="precio_p" value="<?php echo $pro['precio_pro']?>" hidden>
             
                              
-                            <input type="number" step="1" max="<?php echo $pro['cantidad_disp']?>" value="1" min="1" name="quantity" class="quantity-field border-1 text-center w-50 " style="margin-left: 2rem;">     
+                            <input type="number" step="1" max="<?php echo $pro['cantidad_disp']?>" value="1" min="1" name="quantity" class="quantity-field border-1 text-center " style="margin-left: 2rem; width:3.8rem;">     
                           </div>
                        </div>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6 col-sm-12 col-5">
                       <?php $a=0;
                      
                       if($actualizacion==True){
                        foreach($product as $pu):
                         if( $pro['id_producto']== $pu['id_producto']) { ?>
-                      <button disabled type="submit" name="carrito" value="enviar"class="btn text-center border border-secondary" style="margin-left: 3rem; width: 8rem; font: condensed 120% sans-serif; background:  #A9E2F3;">Añadir Carrito</button>
+                      <button disabled type="submit" name="carrito" value="enviar"class="btn text-center border border-secondary" style="margin-left: 1rem; width: 8rem; font: condensed 120% sans-serif; background:  #A9E2F3;">Añadir Carrito</button>
                       <?php $a=1;
                        break;
                        
                        } endforeach;
                        }
                        if($a==0){ ?>
-                      <button  type="submit" name="carrito"  value="enviar" class="btn text-center border border-secondary"  style="margin-left: 3rem; width: 8rem; font: condensed 120% sans-serif; background:  #A9E2F3;">Añadir Carrito</button>
+                      <button  type="submit" name="carrito"  value="enviar" class="btn text-center border border-secondary"  style="margin-left: 1rem; width: 8rem; font: condensed 120% sans-serif; background:  #A9E2F3;">Añadir Carrito</button>
                       <?php };?>
                       
                     </div>
@@ -242,7 +245,9 @@ if($countt >0) {
           </div>
           
         </div>
-        <?php endforeach;?>
+      <?php } 
+      $contador++;
+         endforeach;?>
       </div>
 
       <a href="chatbot.php" class="btn-flotante" style="

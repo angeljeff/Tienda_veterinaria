@@ -222,7 +222,22 @@ switch($clicke){
             $insertarpub->bindParam(':tot', $total_final);
             $insertarpub->bindParam(':id_es',$estado_f);
             $insertarpub->execute();
-            for ($i=0; $i<$limite; $i++){
+            ?>
+            <script> 
+            Swal.fire({
+            title: 'pedido realizado con éxito',
+            text: "********",
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'OK'
+            }).then((result) => {
+            if (result.isConfirmed) {}
+                window.location.href = "<?php echo $url;?>/reportes.php";
+            })
+                </script>
+                    
+            <?php 
+/*             for ($i=0; $i<$limite; $i++){
                 $id_pro=$tabla[$i][0];
                 $canti=$tabla[$i][1];
                 $consultarp= $conexion->prepare("SELECT *FROM productos WHERE  id_producto= :id "); 
@@ -252,14 +267,8 @@ switch($clicke){
                      </script>
                     
                     <?php    
-                }
-
-                
-                
-               }
-
-            
-
+                } 
+               } */
         }
         else{ ?>
             <script>

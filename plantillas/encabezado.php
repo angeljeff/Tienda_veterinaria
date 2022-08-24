@@ -86,9 +86,9 @@ if($datoscarrito==True){
             <div class="row">
             <?php $url="http://".$_SERVER['HTTP_HOST']."/TIENDA_VETERINARIA"?>
                 <div class="col-md-2">
-                  <a href="<?php echo $url;?>/index.php"><img  src="https://d500.epimg.net/cincodias/imagenes/2019/10/02/lifestyle/1570029081_071016_1570029510_rrss_normal.jpg" class="img-fluid" alt=""> </div></a>
-                <div class="col-md-7 slogan">
-                  <p class="text-center">"Protección para las mascotas, Tranquilidad para los humanos"</p>
+                  <a href="<?php echo $url;?>/index.php"><img  src="imagenes/logo.png" class="img-fluid" alt=""> </div></a>
+                <div class="col-md-7 slogan" >
+                  <p class="text-center" >"Protección para las mascotas, Tranquilidad para los humanos"</p>
                 </div>
                   <div class="col-md-3">
                   <div class="container-fluid d-flex">
@@ -119,7 +119,7 @@ if($datoscarrito==True){
               <div class="col-md-2">
                 <a href="<?php echo $url;?>/index.php"><img  src="https://d500.epimg.net/cincodias/imagenes/2019/10/02/lifestyle/1570029081_071016_1570029510_rrss_normal.jpg" class="img-fluid" alt=""> </div></a>
               <div class="col-md-7 slogan">
-                <p class="text-center">"Protección para las mascotas, Tranquilidad para los humanos"</p>
+                <p class="text-center" >"Protección para las mascotas, Tranquilidad para los humanos"</p>
               </div>
                 <div class="col-md-3">
                 <div class="container-fluid d-flex">
